@@ -1,0 +1,39 @@
+diff --git a/utils/vxi11_send.c b/utils/vxi11_send.c
+index afeef87..68afcd8 100644
+--- a/utils/vxi11_send.c
++++ b/utils/vxi11_send.c
+@@ -27,6 +27,7 @@
+ #include <string.h>
+ 
+ #include "vxi11_user.h"
++#define BUF_LEN 100000
+ 
+ #ifdef WIN32
+ #define strncasecmp(a, b, c) stricmp(a, b)
+@@ -37,6 +38,9 @@ int main(int argc, char *argv[])
+ 
+ 	static char *device_ip;
+ 	char cmd[256];
++	char buf[BUF_LEN];
++	int ret;
++	long bytes_returned;
+ 	VXI11_CLINK *clink;
+ 
+ 	if (argc < 2) {
+@@ -54,6 +58,14 @@ int main(int argc, char *argv[])
+ 	memset(cmd, 0, 256);	// initialize command string
+ 	strncpy(cmd, argv[2], 256);
+ 	vxi11_send(clink, cmd, strlen(cmd));
+-	vxi11_close_device(clink, device_ip);
+-	return 0;
++	if (strstr(cmd, "?") != 0) {
++		memset(buf, 0, BUF_LEN);	// initialize command string
++		bytes_returned = vxi11_receive(clink, buf, BUF_LEN);
++		if (bytes_returned > 0) {
++			printf("%s\n", buf);
++		}
++	}
++
++	ret = vxi11_close_device(clink, device_ip);
++	return ret;
+ }
