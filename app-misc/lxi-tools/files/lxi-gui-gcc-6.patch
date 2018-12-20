@@ -1,0 +1,12 @@
+diff --git a/src/gui/lxi-gui/lxi-gui.pro b/src/gui/lxi-gui/lxi-gui.pro
+index dc19ece..e55a952 100644
+--- a/src/gui/lxi-gui/lxi-gui.pro
++++ b/src/gui/lxi-gui/lxi-gui.pro
+@@ -26,7 +26,6 @@ isEmpty(SNAPCRAFT) {
+     INCLUDEPATH += $$QT_INCDIR/$$TRIPLET/qt5
+ }
+ 
+-INCLUDEPATH += $$QT_INCDIR
+ 
+ LIBS += -llxi ../../libapp.a -lreadline -L"$$QT_LIBDIR"
+ 
