@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<longdescription lang="en">
+		LAN eXtensions for Instrumentation (LXI) is a standard developed by the LXI Consortium, an industry consortium that maintains the LXI specification and promotes the LXI Standard.
+		The LXI standard defines the communication protocols for modern instrumentation and data acquisition systems using Ethernet.
+		Visit lxistandard.org for more details.
+		liblxi is an open source software library which offers a simple API for communicating with LXI compatible instruments.
+		The API allows applications to easily discover instruments on networks and communicate SCPI commands.
+	</longdescription>
+</pkgmetadata>
