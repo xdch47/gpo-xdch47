@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>xdch47@posteo.de</email>
+		<name>Felix Neumärker</name>
+	</maintainer>
+	<longdescription lang="en">
+	</longdescription>
+	<upstream>
+		<remote-id type="github">icglue/icglue</remote-id>
+	</upstream>
+	<use>
+		<flag name="nagelfar">Use <pkg>dev-tcltk/nagelfar</pkg>as syntax checker</flag>
+	</use>
+</pkgmetadata>
