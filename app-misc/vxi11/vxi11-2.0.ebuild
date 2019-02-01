@@ -1,4 +1,4 @@
-# Copyright 1999-2018 Gentoo Authors
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -7,7 +7,7 @@ KEYWORDS="amd64 ~x86"
 
 DESCRIPTION="rpc protocol for communicating with vxi11-enabled devices"
 HOMEPAGE="https://github.com/applied-optics/vxi11"
-SRC_URI="https://github.com/applied-optics/vxi11/archive/v2.0.tar.gz"
+SRC_URI="https://github.com/applied-optics/vxi11/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
