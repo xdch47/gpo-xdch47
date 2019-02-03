@@ -33,8 +33,7 @@ pkg_setup() {
 
 src_prepare() {
 	default
-	sed -i -e "s/\"main.Version.*$/\"main.Version=${PV}\"/" \
-		-e "s/-ldflags '-s/-ldflags '/" \
+	sed -i -e "s/-ldflags '-s/-ldflags '/" \
 		-e "s/GOFLAGS := -i -v/GOFLAGS := -v/" \
 		Makefile || die
 	sed -i -e "s#^RUN_MODE = dev#RUN_MODE = prod#" \
@@ -49,12 +48,13 @@ src_prepare() {
 
 src_compile() {
 	local my_tags=(
+		bindata
 		$(usev pam)
 		$(usex sqlite 'sqlite sqlite_unlock_notify' '')
 	)
 	export GOPATH="${WORKDIR}/${P}:$(get_golibdir_gopath)"
-	emake generate
-	TAGS="bindata ${my_tags[@]}" emake build
+	emake DRONE_TAG="${PV}" generate
+	TAGS="${my_tags[@]}" emake DRONE_TAG="${PV}" build
 }
 
 src_install() {
