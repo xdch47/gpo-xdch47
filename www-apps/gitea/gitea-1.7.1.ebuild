@@ -15,6 +15,8 @@ LICENSE="MIT"
 SLOT="0"
 IUSE="pam sqlite"
 
+S="${WORKDIR}/${P}/src/${EGO_PN}"
+
 DEPEND="
 	dev-go/go-bindata
 	sys-libs/pam
@@ -31,7 +33,6 @@ pkg_setup() {
 
 src_prepare() {
 	default
-	pushd "src/${EGO_PN}" >/dev/null || die
 	sed -i -e "s/\"main.Version.*$/\"main.Version=${PV}\"/" \
 		-e "s/-ldflags '-s/-ldflags '/" \
 		-e "s/GOFLAGS := -i -v/GOFLAGS := -v/" \
@@ -44,7 +45,6 @@ src_prepare() {
 		-e "s#^APP_ID =#;APP_ID =#" \
 		-e "s#^TRUSTED_FACETS =#;TRUSTED_FACETS =#" \
 		custom/conf/app.ini.sample || die
-	popd >/dev/null || die
 }
 
 src_compile() {
@@ -52,24 +52,20 @@ src_compile() {
 		$(usev pam)
 		$(usex sqlite 'sqlite sqlite_unlock_notify' '')
 	)
-	pushd "src/${EGO_PN}" >/dev/null || die
 	export GOPATH="${WORKDIR}/${P}:$(get_golibdir_gopath)"
 	emake generate
-	emake TAGS="bindata ${my_tags[@]}" build
-	popd >/dev/null || die
+	TAGS="bindata ${my_tags[@]}" emake build
 }
 
 src_install() {
 	diropts -m0750 -o git -g git
 	keepdir /var/log/gitea /var/lib/gitea /var/lib/gitea/data
-	pushd "src/${EGO_PN}" >/dev/null || die
 	dobin gitea
 	insinto /var/lib/gitea/conf
 	doins custom/conf/app.ini.sample
-	popd >/dev/null || die
 	newinitd "${FILESDIR}"/gitea.initd-r1 gitea
 	newconfd "${FILESDIR}"/gitea.confd gitea
-	systemd_dounit "${FILESDIR}/gitea.service"
+	systemd_dounit "${FILESDIR}"/gitea.service
 }
 
 pkg_postinst() {
