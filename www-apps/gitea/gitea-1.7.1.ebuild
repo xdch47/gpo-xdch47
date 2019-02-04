@@ -17,6 +17,10 @@ IUSE="pam sqlite"
 
 S="${WORKDIR}/${P}/src/${EGO_PN}"
 
+PATCHES=(
+	"${FILESDIR}/fix-chpw-loop.patch"
+)
+
 DEPEND="
 	dev-go/go-bindata
 	sys-libs/pam
