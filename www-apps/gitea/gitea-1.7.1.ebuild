@@ -31,6 +31,19 @@ pkg_setup() {
 	enewuser git -1 /bin/bash /var/lib/gitea git
 }
 
+gitea_make() {
+	local my_tags=(
+		bindata
+		$(usev pam)
+		$(usex sqlite 'sqlite sqlite_unlock_notify' '')
+	)
+	local my_makeopt=(
+		DRONE_TAG=${PV}
+		TAGS="${my_tags[@]}"
+	)
+	GOPATH=${WORKDIR}/${P}:$(get_golibdir_gopath) emake "${my_makeopt[@]}" $1 || die "make $1 failed"
+}
+
 src_prepare() {
 	default
 	sed -i -e "s/-ldflags '-s/-ldflags '/" \
@@ -44,23 +57,23 @@ src_prepare() {
 		-e "s#^APP_ID =#;APP_ID =#" \
 		-e "s#^TRUSTED_FACETS =#;TRUSTED_FACETS =#" \
 		custom/conf/app.ini.sample || die
+	gitea_make generate
 }
 
 src_compile() {
-	local my_tags=(
-		bindata
-		$(usev pam)
-		$(usex sqlite 'sqlite sqlite_unlock_notify' '')
-	)
-	export GOPATH="${WORKDIR}/${P}:$(get_golibdir_gopath)"
-	emake DRONE_TAG="${PV}" generate
-	TAGS="${my_tags[@]}" emake DRONE_TAG="${PV}" build
+	gitea_make build
+}
+
+src_test() {
+	gitea_make test
+
 }
 
 src_install() {
+	dobin gitea
+
 	diropts -m0750 -o git -g git
 	keepdir /var/log/gitea /var/lib/gitea /var/lib/gitea/data
-	dobin gitea
 	insinto /var/lib/gitea/conf
 	doins custom/conf/app.ini.sample
 	newinitd "${FILESDIR}"/gitea.initd-r1 gitea
