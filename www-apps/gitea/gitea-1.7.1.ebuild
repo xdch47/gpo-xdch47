@@ -20,19 +20,23 @@ S="${WORKDIR}/${P}/src/${EGO_PN}"
 PATCHES=(
 	"${FILESDIR}/fix-chpw-loop.patch"
 )
+COMMON_DEPEND="pam? ( sys-libs/pam )"
 
 DEPEND="
+	${COMMON_DEPEND}
 	dev-go/go-bindata
-	sys-libs/pam
 "
 RDEPEND="
+	${COMMON_DEPEND}
 	dev-vcs/git
-	pam? ( sys-libs/pam )
 "
 
+GITEA_USER=git
+GITEA_GROUP=git
+
 pkg_setup() {
-	enewgroup git
-	enewuser git -1 /bin/bash /var/lib/gitea git
+	enewgroup ${GITEA_GROUP}
+	enewuser ${GITEA_USER} -1 /bin/bash /var/lib/gitea ${GITEA_GROUP}
 }
 
 gitea_make() {
@@ -80,7 +84,7 @@ src_install() {
 	keepdir /var/log/gitea /var/lib/gitea /var/lib/gitea/data
 	insinto /var/lib/gitea/conf
 	doins custom/conf/app.ini.sample
-	newinitd "${FILESDIR}"/gitea.initd-r1 gitea
+	newinitd "${FILESDIR}"/gitea.initd gitea
 	newconfd "${FILESDIR}"/gitea.confd gitea
 	systemd_dounit "${FILESDIR}"/gitea.service
 }
@@ -89,7 +93,7 @@ pkg_postinst() {
 	if [[ ! -e "${EROOT}/var/lib/gitea/conf/app.ini" ]] ; then
 		elog "No app.ini found, copying initial config over"
 		cp "${EROOT}"/var/lib/gitea/conf/{app.ini.sample,app.ini} || die
-		chown git:git "${EROOT}/var/lib/gitea/conf/app.ini"
+		chown ${GITEA_USER}:${GITEA_GROUP} "${EROOT}/var/lib/gitea/conf/app.ini"
 	else
 		elog "app.ini found, please check example file for possible changes"
 		ewarn "Please note that environment variables have been changed:"
