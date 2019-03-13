@@ -1,2 +1,9 @@
-# arguments for gitea
-command_args="--config /var/lib/gitea/conf/app.ini"
+
+# config file path
+GITEA_CONFIG="/var/lib/gitea/conf/app.ini"
+
+# git paths
+GITEA_WORK_DIR="/var/lib/gitea"
+GITEA_CUSTOM="${GITEA_WORK_DIR}/custom"
+
+#GITEA_OPTS = "--port 3000"
