@@ -1,7 +1,7 @@
 # Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 inherit golang-vcs-snapshot systemd user
 
 EGO_PN="code.gitea.io/gitea"
@@ -104,7 +104,7 @@ pkg_postinst() {
 		ewarn "The default path for the gitea configuration has been changed to ${EROOT}var/lib/gitea/conf/app.ini."
 		ewarn "In order to migrate the path in the gitea-repositories hooks and ssh authorized_keys have to be adapted."
 		ewarn "Depending on your configuration you should run something like:"
-		ewarn "  sed -i.backup -e 's#/var/lib/gitea/conf/app.ini#/etc/gitea/app.ini#' /var/lib/gitea/gitea-repositories/**/**/hooks/**/*"
-		ewarn "  sed -i.backup -e 's#/var/lib/gitea/conf/app.ini#/etc/gitea/app.ini#' /var/lib/gitea/.ssh/authorized_keys"
+		ewarn "  sed -e 's#/var/lib/gitea/conf/app.ini#/etc/gitea/app.ini#' /var/lib/gitea/gitea-repositories/**/**/hooks/**/*"
+		ewarn "  sed -e 's#/var/lib/gitea/conf/app.ini#/etc/gitea/app.ini#' /var/lib/gitea/.ssh/authorized_keys"
 	fi
 }
