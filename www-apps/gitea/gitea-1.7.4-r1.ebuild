@@ -92,11 +92,10 @@ src_install() {
 	newconfd "${FILESDIR}/gitea.confd-r1" gitea
 	systemd_dounit "${FILESDIR}/gitea.service"
 
-	diropts -m0750 -o root -g ${GITEA_GROUP}
-	dodir /etc/gitea
-	insopts -m660  -o root -g ${GITEA_GROUP}
 	insinto /etc/gitea
 	newins custom/conf/app.ini.sample app.ini
+	fowners root:${GITEA_GROUP} /etc/gitea/{,app.ini}
+	fperms o-rwx /etc/gitea/{,app.ini}
 }
 
 pkg_postinst() {
