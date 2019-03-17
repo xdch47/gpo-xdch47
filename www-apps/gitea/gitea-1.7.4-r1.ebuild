@@ -7,8 +7,8 @@ inherit golang-vcs-snapshot systemd user
 EGO_PN="code.gitea.io/gitea"
 KEYWORDS="~amd64 ~arm"
 
-DESCRIPTION="A painless self-hosted Git service, written in Go"
-HOMEPAGE="https://gitea.io/"
+DESCRIPTION="A painless self-hosted Git service"
+HOMEPAGE="https://gitea.io"
 SRC_URI="https://github.com/go-gitea/gitea/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
@@ -19,14 +19,13 @@ S="${WORKDIR}/${P}/src/${EGO_PN}"
 
 COMMON_DEPEND="pam? ( sys-libs/pam )"
 
-DEPEND="
-	${COMMON_DEPEND}
-	dev-go/go-bindata
-"
-RDEPEND="
-	${COMMON_DEPEND}
-	dev-vcs/git
-"
+DEPEND="${COMMON_DEPEND}
+	dev-go/go-bindata"
+
+RDEPEND="${COMMON_DEPEND}
+	dev-vcs/git"
+
+DOCS=( custom/conf/app.ini.sample CONTRIBUTING.md README.md )
 
 GITEA_USER=git
 GITEA_GROUP=git
@@ -51,11 +50,11 @@ gitea_make() {
 
 src_prepare() {
 	default
-	sed -i                                     \
+	sed -i \
 		-e "s/-ldflags '-s/-ldflags '/"        \
 		-e "s/GOFLAGS := -i -v/GOFLAGS := -v/" \
 		Makefile || die
-	sed -i                                                                          \
+	sed -i \
 		-e "s#^RUN_MODE = dev#RUN_MODE = prod#"                                     \
 		-e "s#^ROOT =#ROOT = ${EPREFIX}/var/lib/gitea/gitea-repositories#"          \
 		-e "s#^ROOT_PATH =#ROOT_PATH = ${EPREFIX}/var/log/gitea#"                   \
@@ -86,8 +85,11 @@ src_test() {
 src_install() {
 	dobin gitea
 
+	einstalldocs
+
 	diropts -m0750 -o ${GITEA_USER} -g ${GITEA_GROUP}
 	keepdir /etc/gitea /var/log/gitea /var/lib/gitea /var/lib/gitea/data
+
 	newinitd "${FILESDIR}/gitea.initd" gitea
 	newconfd "${FILESDIR}/gitea.confd-r1" gitea
 	systemd_dounit "${FILESDIR}/gitea.service"
