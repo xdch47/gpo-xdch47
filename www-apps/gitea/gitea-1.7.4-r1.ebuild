@@ -87,7 +87,7 @@ src_install() {
 	dobin gitea
 
 	diropts -m0750 -o ${GITEA_USER} -g ${GITEA_GROUP}
-	keepdir /var/log/gitea /var/lib/gitea /var/lib/gitea/data
+	keepdir /etc/gitea /var/log/gitea /var/lib/gitea /var/lib/gitea/data
 	newinitd "${FILESDIR}/gitea.initd" gitea
 	newconfd "${FILESDIR}/gitea.confd-r1" gitea
 	systemd_dounit "${FILESDIR}/gitea.service"
@@ -103,7 +103,7 @@ pkg_postinst() {
 		ewarn "The default path for the gitea configuration has been changed to ${EROOT}var/lib/gitea/conf/app.ini."
 		ewarn "In order to migrate the path in the gitea-repositories hooks and ssh authorized_keys have to be adapted."
 		ewarn "Depending on your configuration you should run something like:"
-		ewarn "  sed -e 's#/var/lib/gitea/conf/app.ini#/etc/gitea/app.ini#' /var/lib/gitea/gitea-repositories/**/**/hooks/**/*"
+		ewarn "  sed -e 's#/var/lib/gitea/conf/app.ini#/etc/gitea/app.ini#' /var/lib/gitea/gitea-repositories/*/*/hooks/*/*"
 		ewarn "  sed -e 's#/var/lib/gitea/conf/app.ini#/etc/gitea/app.ini#' /var/lib/gitea/.ssh/authorized_keys"
 	fi
 }
