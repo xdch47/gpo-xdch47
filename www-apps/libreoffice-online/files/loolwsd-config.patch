@@ -51,3 +51,16 @@ index 0ea2abd8..89578d98 100644
          <cert_file_path desc="Path to the cert file" relative="false">/etc/loolwsd/cert.pem</cert_file_path>
          <key_file_path desc="Path to the key file" relative="false">/etc/loolwsd/key.pem</key_file_path>
          <ca_file_path desc="Path to the ca file" relative="false">/etc/loolwsd/ca-chain.cert.pem</ca_file_path>
+diff --git a/tools/Config.cpp b/tools/Config.cpp
+index 2c257c60..68370cf4 100644
+--- a/tools/Config.cpp
++++ b/tools/Config.cpp
+@@ -337,7 +337,7 @@ int Config::main(const std::vector<std::string>& args)
+     }
+     else if (args[0] == "update-system-template")
+     {
+-        const char command[] = "su lool --shell=/bin/sh -c 'loolwsd-systemplate-setup /opt/lool/systemplate " LO_PATH " >/dev/null 2>&1'";
++        const char command[] = "su lool --shell=/bin/sh -c 'loolwsd-systemplate-setup /var/lib/libreoffice-online/systemplate  " LO_PATH " >/dev/null 2>&1'";
+         std::cout << "Running the following command:" << std::endl
+                   << command << std::endl;
+ 
