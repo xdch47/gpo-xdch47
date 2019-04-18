@@ -5,7 +5,7 @@ EAPI=7
 
 inherit autotools fcaps git-r3 user
 
-DESCRIPTION="Online is a server service"
+DESCRIPTION="HTML5/cloud-based libreoffice frontend"
 HOMEPAGE="https://www.libreoffice.org/download/libreoffice-online/"
 EGIT_REPO_URI="https://github.com/LibreOffice/online"
 EGIT_BRANCH="libreoffice-$(ver_rs 1- - $(ver_cut 1-2))"
