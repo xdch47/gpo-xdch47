@@ -9,7 +9,7 @@ DESCRIPTION="Online is a server service"
 HOMEPAGE="https://www.libreoffice.org/download/libreoffice-online/"
 EGIT_REPO_URI="https://github.com/LibreOffice/online"
 EGIT_BRANCH="libreoffice-$(ver_rs 1- - $(ver_cut 1-2))"
-EGIT_COMMIT="981298a8c26636b2ca2a613c476dfa473ad622ca"
+EGIT_COMMIT="libreoffice-${PV}"
 
 SRC_URI="https://dev-builds.libreoffice.org/pre-releases/src/libreoffice-${PV}.tar.xz
 	https://download.documentfoundation.org/libreoffice/src/$(ver_cut 1-3)/libreoffice-${PV}.tar.xz
