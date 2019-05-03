@@ -7,7 +7,8 @@ inherit autotools fcaps git-r3 user
 
 DESCRIPTION="Online is a server service"
 HOMEPAGE="https://www.libreoffice.org/download/libreoffice-online/"
-EGIT_REPO_URI="https://github.com/LibreOffice/online"
+EGIT_REPO_URI="https://git.libreoffice.org/online"
+
 EGIT_BRANCH="libreoffice-$(ver_rs 1- - $(ver_cut 1-2))"
 EGIT_COMMIT="libreoffice-${PV}"
 
@@ -22,11 +23,14 @@ IUSE=""
 DEPEND="
 	>=app-office/libreoffice-$(ver_cut 1)
 	dev-libs/poco
+	app-arch/cpio
 	"
 
 RDEPEND="${DEPEND}"
 BDEPEND="dev-python/polib
-	net-libs/nodejs"
+	net-libs/nodejs
+	dev-util/cppunit
+	"
 
 PATCHES=("${FILESDIR}/loolwsd-config.patch" "${FILESDIR}/disable-fc-cache.patch")
 
