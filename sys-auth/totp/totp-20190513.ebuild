@@ -5,7 +5,7 @@ EAPI=7
 
 inherit git-r3
 EGIT_REPO_URI="https://github.com/TestudoAquatilis/totp"
-EGIT_COMMIT="2623dd13a2d231d452da54f9a0c1901d82a58676"
+EGIT_COMMIT="ba17832de9e82e2b1c9550f24c56fdfed38a5187"
 
 DESCRIPTION="Command-line time-based one-time-password (TOTP) token generator"
 HOMEPAGE="https://github.com/TestudoAquatilis/totp"
