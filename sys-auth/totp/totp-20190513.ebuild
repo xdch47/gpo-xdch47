@@ -17,8 +17,10 @@ IUSE=""
 
 DOC=(README.md)
 
-COMMON_DEPEND=(dev-python/onetimepass)
-
+COMMON_DEPEND=(
+	dev-python/onetimepass
+	app-crypt/gnupg
+	)
 DEPEND="${COMMON_DEPEND}"
 RDEPEND="${COMMON_DEPEND}"
 
