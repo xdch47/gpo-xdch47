@@ -4,4 +4,7 @@
 	<longdescription lang="en">
 		A fairly exhaustive interactive zsh setup provided by the grml project.
 	</longdescription>
+	<use>
+		<flag name="man">Generate and install manpages</flag>
+	</use>
 </pkgmetadata>
