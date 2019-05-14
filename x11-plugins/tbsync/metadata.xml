@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<longdescription lang="en">
+		TbSync is a central user interface to manage cloud accounts and to synchronize their contact, task and calendar information with Thunderbird. Its main objective is to simplify the setup process for such accounts. The following providers (protocols) are currently supported:
+		CalDAV and CardDAV, via DAV-4-TbSync [compatibility list (DAV)]
+		Exchange ActiveSync (EAS v2.5 and v14.0), via EAS-4-TbSync [compatibility list (EAS)]
+	</longdescription>
+	<use>
+		<flag name="dav">Install systemwide provider add-on for CalDAV &amp; CardDAV synchronization capabilities to TbSync</flag>
+		<flag name="eas">Install systemwide provider add-on for Exchange ActiveSync (EAS v2.5 &amp; v14.0) synchronization capabilities to TbSync</flag>
+	</use>
+</pkgmetadata>
