@@ -26,7 +26,6 @@ RDEPEND+=" pam? ( >=sys-auth/pambase-20080219.1 )"
 REQUIRED_USE="pam? ( !static )"
 
 PATCHES=(
-	"${FILESDIR}/${PN}-2018-dbscp.patch"
 )
 
 set_options() {
@@ -43,6 +42,7 @@ set_options() {
 
 src_prepare() {
 	default
+	eapply -p0 "${FILESDIR}/dropbear-0.46-dbscp.patch"
 	sed \
 		-e '/SFTPSERVER_PATH/s:".*":"/usr/lib/misc/sftp-server":' \
 		default_options.h > localoptions.h || die
