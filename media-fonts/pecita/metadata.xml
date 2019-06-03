@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<longdescription lang="en">
+		Pecita is a typeface that mimics handwriting. The use of complex features makes this possible. The font is coded with full Unicode glyphs customary in Latin and pan European languages, the phonetic alphabet, katakana, mathematical operators and many symbols. The OpenType features Localized form substitution, Superscript , Subscript, Small Capitals, Glyph decomposition, Standard Ligatures and Contextual Alternates are implemented. The last version improves accented characters. Please visit http://pecita.eu
+	</longdescription>
+</pkgmetadata>
