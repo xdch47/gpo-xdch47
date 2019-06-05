@@ -5,7 +5,6 @@ EAPI=7
 inherit golang-vcs-snapshot systemd user
 
 EGO_PN="code.gitea.io/gitea"
-KEYWORDS="~amd64 ~arm ~arm64"
 
 DESCRIPTION="A painless self-hosted Git service"
 HOMEPAGE="https://gitea.io"
@@ -13,6 +12,7 @@ SRC_URI="https://github.com/go-gitea/gitea/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="MIT"
 SLOT="0"
+KEYWORDS="~amd64 ~arm ~arm64"
 IUSE="pam sqlite"
 
 COMMON_DEPEND="pam? ( sys-libs/pam )"
@@ -39,7 +39,7 @@ gitea_make() {
 		DRONE_TAG=${PV}
 		TAGS="${my_tags[@]}"
 	)
-	GOPATH=${WORKDIR}/${P}:$(get_golibdir_gopath) emake "${my_makeopt[@]}" "$1"
+	GOPATH=${WORKDIR}/${P}:$(get_golibdir_gopath) emake "${my_makeopt[@]}" "$@"
 }
 
 src_compile() {
