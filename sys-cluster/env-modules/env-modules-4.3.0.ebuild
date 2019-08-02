@@ -18,7 +18,7 @@ RDEPEND="$DEPEND"
 
 S=${WORKDIR}/modules-${PV}
 
-PATCHES=( ${FILESDIR}/moduleshome.patch )
+PATCHES=( "${FILESDIR}/moduleshome.patch" "${FILESDIR}/files/lib-makefile.in.patch")
 
 src_configure() {
 	# handcrafted configure -- prefix is MODULESHOME
