@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-inherit golang-vcs-snapshot systemd user
+inherit golang-vcs-snapshot tmpfiles systemd user
 
 EGO_PN="code.gitea.io/gitea"
 
@@ -24,7 +24,7 @@ RDEPEND="${COMMON_DEPEND}
 DOCS=( custom/conf/app.ini.sample CONTRIBUTING.md README.md )
 S="${WORKDIR}/${P}/src/${EGO_PN}"
 
-PATCHES=( ${FILESDIR}/gitea-mod-vendor.patch )
+PATCHES=( "${FILESDIR}/gitea-mod-vendor.patch" "${FILESDIR}/gitea-logflags.patch" )
 
 pkg_setup() {
 	enewgroup git
@@ -71,17 +71,16 @@ src_compile() {
 	gitea_make build
 }
 
-src_test() {
-	gitea_make test
-}
-
 src_install() {
 	dobin gitea
 
 	einstalldocs
 
-	newconfd "${FILESDIR}"/gitea.confd-r1 gitea
-	newinitd "${FILESDIR}"/gitea.initd-r3 gitea
+	newconfd "${FILESDIR}/gitea.confd-r1" gitea
+	newinitd "${FILESDIR}/gitea.initd-r3" gitea
+	newtmpfiles - gitea.conf <<-EOF
+		d /run/gitea 0755 git git
+	EOF
 	systemd_newunit "${FILESDIR}"/gitea.service-r2 gitea.service
 
 	insinto /etc/gitea
