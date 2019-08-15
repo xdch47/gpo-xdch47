@@ -10,7 +10,7 @@ HOMEPAGE="https://developers.hp.com/hp-linux-imaging-and-printing/plugins"
 SRC_URI="https://developers.hp.com/sites/default/files/hplip-${PV}-plugin.run"
 LICENSE="hplip-plugin"
 SLOT="0"
-KEYWORDS="~amd64 ~arm ~arm64 ~x86"
+KEYWORDS="~amd64 ~arm ~x86"
 IUSE=""
 
 RDEPEND="
@@ -43,7 +43,7 @@ src_install() {
 	case "${ARCH}" in
 		amd64) hplip_arch="x86_64" ;;
 		arm)   hplip_arch="arm32"  ;;
-		arm64) hplip_arch="arm64"  ;;
+		#arm64) hplip_arch="arm64"  ;;
 		x86)   hplip_arch="x86_32" ;;
 		*)     die "Unsupported architecture." ;;
 	esac
