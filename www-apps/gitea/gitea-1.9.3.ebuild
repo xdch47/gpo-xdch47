@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-inherit golang-vcs-snapshot tmpfiles systemd user
+inherit golang-vcs-snapshot tmpfiles systemd
 
 EGO_PN="code.gitea.io/gitea"
 
@@ -13,23 +13,28 @@ SRC_URI="https://github.com/go-gitea/gitea/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS="~amd64 ~arm ~arm64"
-IUSE="pam sqlite"
+IUSE="+acct pam sqlite"
 
-COMMON_DEPEND="pam? ( sys-libs/pam )"
+COMMON_DEPEND="
+	acct? (
+		acct-group/git
+		acct-user/git[gitea]
+	)
+	pam? ( sys-libs/pam )"
 DEPEND="${COMMON_DEPEND}
 	dev-go/go-bindata"
 RDEPEND="${COMMON_DEPEND}
-	dev-vcs/git"
+	dev-vcs/git
+	acct? (
+		!dev-vcs/gitolite
+		!dev-vcs/gitolite-gentoo
+	)
+	"
 
 DOCS=( custom/conf/app.ini.sample CONTRIBUTING.md README.md )
 S="${WORKDIR}/${P}/src/${EGO_PN}"
 
 PATCHES=( "${FILESDIR}/gitea-mod-vendor.patch" "${FILESDIR}/gitea-logflags.patch" )
-
-pkg_setup() {
-	enewgroup git
-	enewuser git -1 /bin/bash /var/lib/gitea git
-}
 
 gitea_make() {
 	local my_tags=(
@@ -85,12 +90,14 @@ src_install() {
 
 	insinto /etc/gitea
 	newins custom/conf/app.ini.sample app.ini
-	fowners root:git /etc/gitea/{,app.ini}
-	fperms g+w,o-rwx /etc/gitea/{,app.ini}
+	if use acct ; then
+		fowners root:git /etc/gitea/{,app.ini}
+		fperms g+w,o-rwx /etc/gitea/{,app.ini}
 
-	diropts -m0750 -o git -g git
-	keepdir /var/lib/gitea /var/lib/gitea/custom /var/lib/gitea/data
-	keepdir /var/log/gitea
+		diropts -m0750 -o git -g git
+		keepdir /var/lib/gitea /var/lib/gitea/custom /var/lib/gitea/data
+		keepdir /var/log/gitea
+	fi
 }
 
 pkg_postinst() {
