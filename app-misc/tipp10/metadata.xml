@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<longdescription lang="en">
+		Note: This is the unofficial (ported to QT5) version of TIPP10 from André Apitzsch (https://gitlab.com/a_a/tipp10).
+
+		TIPP10 is a free 10-finger touch typing tutor. You can use TIPP10 directly in your browser or you can download the software version for Windows, Mac OS and Linux. TIPP10 is easy to use and features a clear user interface. Beginners and even children will find their way around right away so they can start practicing without a hitch. You will be able to learn touch typing quickly and efficiently with the program’s intelligent practice lessons, useful support functions and an extensive progress tracker. You can also play a typing game and expand the program with open lessons or make your own to meet your specific needs.
+	</longdescription>
+</pkgmetadata>
