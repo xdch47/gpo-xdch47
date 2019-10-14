@@ -18,7 +18,7 @@ IUSE="bsdpty minimal multicall pam +shadow static +syslog +utmp zlib"
 LIB_DEPEND="zlib? ( sys-libs/zlib[static-libs(+)] )
 	dev-libs/libtommath[static-libs(+)]"
 RDEPEND="!static? ( ${LIB_DEPEND//\[static-libs(+)]} )
-	pam? ( virtual/pam )"
+	pam? ( sys-libs/pam )"
 DEPEND="${RDEPEND}
 	static? ( ${LIB_DEPEND} )"
 RDEPEND+=" pam? ( >=sys-auth/pambase-20080219.1 )"
