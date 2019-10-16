@@ -10,19 +10,19 @@ DESCRIPTION="A painless self-hosted Git service"
 HOMEPAGE="https://gitea.io"
 SRC_URI="https://github.com/go-gitea/gitea/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 
-LICENSE="MIT"
+LICENSE="MIT Apache-2.0 BSD MPL-2.0"
 SLOT="0"
 KEYWORDS="~amd64 ~arm ~arm64"
 IUSE="+acct pam sqlite"
 
+BDEPEND="<dev-lang/go-1.13"
 COMMON_DEPEND="
 	acct? (
 		acct-group/git
 		acct-user/git[gitea]
 	)
 	pam? ( sys-libs/pam )"
-DEPEND="${COMMON_DEPEND}
-	dev-go/go-bindata"
+DEPEND="${COMMON_DEPEND}"
 RDEPEND="${COMMON_DEPEND}
 	dev-vcs/git
 	acct? (
@@ -52,19 +52,22 @@ gitea_make() {
 
 src_prepare() {
 	default
-	sed -i \
-		-e "s#^RUN_MODE = dev#RUN_MODE = prod#"                                     \
-		-e "s#^ROOT =#ROOT = ${EPREFIX}/var/lib/gitea/gitea-repositories#"          \
-		-e "s#^ROOT_PATH =#ROOT_PATH = ${EPREFIX}/var/log/gitea#"                   \
-		-e "s#^APP_DATA_PATH = data#APP_DATA_PATH = ${EPREFIX}/var/lib/gitea/data#" \
-		-e "s#^HTTP_ADDR = 0.0.0.0#HTTP_ADDR = 127.0.0.1#"                          \
-		-e "s#^MODE = console#MODE = file#"                                         \
-		-e "s#^LEVEL = Trace#LEVEL = Info#"                                         \
-		-e "s#^LOG_SQL = true#LOG_SQL = false#"                                     \
-		-e "s#^DISABLE_ROUTER_LOG = false#DISABLE_ROUTER_LOG = true#"               \
-		-e "s#^APP_ID =#;APP_ID =#"                                                 \
-		-e "s#^TRUSTED_FACETS =#;TRUSTED_FACETS =#"                                 \
-		custom/conf/app.ini.sample || die
+
+	local sedcmds=(
+		-e "s#^RUN_MODE = dev#RUN_MODE = prod#"
+		-e "s#^ROOT =#ROOT = ${EPREFIX}/var/lib/gitea/gitea-repositories#"
+		-e "s#^ROOT_PATH =#ROOT_PATH = ${EPREFIX}/var/log/gitea#"
+		-e "s#^APP_DATA_PATH = data#APP_DATA_PATH = ${EPREFIX}/var/lib/gitea/data#"
+		-e "s#^HTTP_ADDR = 0.0.0.0#HTTP_ADDR = 127.0.0.1#"
+		-e "s#^MODE = console#MODE = file#"
+		-e "s#^LEVEL = Trace#LEVEL = Info#"
+		-e "s#^LOG_SQL = true#LOG_SQL = false#"
+		-e "s#^DISABLE_ROUTER_LOG = false#DISABLE_ROUTER_LOG = true#"
+		-e "s#^APP_ID =#;APP_ID =#"
+		-e "s#^TRUSTED_FACETS =#;TRUSTED_FACETS =#"
+	)
+
+	sed -i "${sedcmds[@]}" custom/conf/app.ini.sample || die
 	if use sqlite ; then
 		sed -i -e "s#^DB_TYPE = .*#DB_TYPE = sqlite3#" custom/conf/app.ini.sample || die
 	fi
