@@ -12,7 +12,6 @@ The action for the module command to take is described by the sub-command and it
 	<flag name="compat-version">Also install C version of modules (compatibility mode)</flag>
 	<flag name="example-modulefiles">Install example module files</flag>
 	<flag name="init-profile">Create a symlinks in /etc/profile.d directory to init/profile.{sh,csh}</flag>
-	<flag name="zshcomp-patch">Apply zsh completion patch (directory-wise module completion)</flag>
 </use>
 </pkgmetadata>
 
