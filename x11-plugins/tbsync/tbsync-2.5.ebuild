@@ -4,8 +4,8 @@
 EAPI=7
 
 MY_PN="TbSync"
-DAV_PV="0.15"
-EAS_PV="0.12"
+DAV_PV="1.4"
+EAS_PV="1.6"
 
 DESCRIPTION="Central user interface to synchronize organisation data with Thunderbird"
 HOMEPAGE="https://github.com/jobisoft/TbSync"
@@ -20,7 +20,7 @@ IUSE="+dav +eas"
 
 DEPEND="app-arch/zip"
 RDEPEND="${DEPEND}
-		<mail-client/thunderbird-68.0.0"
+		>=mail-client/thunderbird-68.0.0"
 BDEPEND=""
 
 S="${WORKDIR}/${MY_PN}-${PV}"
@@ -29,7 +29,7 @@ tbsync_emid="tbsync@jobisoft.de"
 dav4tbsync_emid="dav4tbsync@jobisoft.de"
 eas4tbsync_emid="eas4tbsync@jobisoft.de"
 
-xpi_files=(content locale skin chrome.manifest install.rdf bootstrap.js LICENSE README.md)
+xpi_files=(content _locales skin chrome.manifest manifest.json LICENSE README.md bootstrap.js CONTRIBUTORS.md)
 
 src_compile() {
 	zip -r "$S/${tbsync_emid}.xpi" ${xpi_files[@]}
