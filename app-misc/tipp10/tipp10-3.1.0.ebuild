@@ -15,5 +15,6 @@ KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 DEPEND="dev-qt/qtmultimedia"
-RDEPEND="${DEPEND}"
+RDEPEND="${DEPEND}
+	dev-qt/qtsql"
 BDEPEND=""
