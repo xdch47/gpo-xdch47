@@ -25,10 +25,6 @@ COMMON_DEPEND="
 DEPEND="${COMMON_DEPEND}"
 RDEPEND="${COMMON_DEPEND}
 	dev-vcs/git
-	acct? (
-		!dev-vcs/gitolite
-		!dev-vcs/gitolite-gentoo
-	)
 	"
 
 DOCS=( custom/conf/app.ini.sample CONTRIBUTING.md README.md )
