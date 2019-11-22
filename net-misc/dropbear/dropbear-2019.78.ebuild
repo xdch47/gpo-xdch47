@@ -1,7 +1,7 @@
 # Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI="7"
+EAPI=7
 
 inherit pam savedconfig user
 
@@ -26,23 +26,21 @@ RDEPEND+=" pam? ( >=sys-auth/pambase-20080219.1 )"
 REQUIRED_USE="pam? ( !static )"
 
 PATCHES=(
+	"${FILESDIR}"/${PN}-0.46-dbscp.patch
 )
 
 set_options() {
-	secondary_progs=(
-		dbclient dropbearkey
+	progs=(
+		dropbear dbclient dropbearkey
 		$(usex minimal "" "dropbearconvert scp")
 	)
-	progs=(dropbear "${secondary_progs[@]}")
 	makeopts=(
 		MULTI=$(usex multicall 1 0)
-		STATIC=$(usex static 1 0)
 	)
 }
 
 src_prepare() {
 	default
-	eapply -p0 "${FILESDIR}/dropbear-0.46-dbscp.patch"
 	sed \
 		-e '/SFTPSERVER_PATH/s:".*":"/usr/lib/misc/sftp-server":' \
 		default_options.h > localoptions.h || die
@@ -57,21 +55,20 @@ src_configure() {
 	#	--disable-bundled-libtom
 	# We disable the hardening flags as our compiler already enables them
 	# by default as is appropriate for the target.
-
-	confopts=(
+	local myeconfargs=(
 		--disable-harden
 		$(use_enable zlib)
 		$(use_enable pam)
 		$(use_enable !bsdpty openpty)
 		$(use_enable shadow)
+		$(use_enable static)
 		$(use_enable syslog)
 	)
 
 	if ! use utmp ; then
 		confopts+=(--disable-{lastlog,utmp{,x},wtmp{,x},loginfunc,putut{,x}line})
 	fi
-
-	econf "${confopts[@]}"
+	econf "${myeconfargs[@]}"
 }
 
 src_compile() {
@@ -81,25 +78,28 @@ src_compile() {
 
 src_install() {
 	set_options
+	emake "${makeopts[@]}" PROGRAMS="${progs[*]}" DESTDIR="${D}" install
 	doman *.8
 	newinitd "${FILESDIR}"/dropbear.init.d dropbear
 	newconfd "${FILESDIR}"/dropbear.conf.d dropbear
+	dodoc CHANGES README SMALL MULTI
 
 	# The multi install target does not install the links right.
 	if use multicall ; then
-		dobin dropbearmulti || die "dobin failed"
-		dosym ../bin/dropbearmulti "${EPREFIX}"/usr/sbin/dropbear
-		for p in "${secondary_progs[@]}" ; do
-			dosym dropbearmulti "${EPREFIX}/usr/bin/$p"
+		cd "${ED}"/usr/bin || die
+		local x
+		for x in "${progs[@]}" ; do
+			ln -sf dropbearmulti ${x} || die "ln -s dropbearmulti to ${x} failed"
 		done
-	else
-		emake "${makeopts[@]}" PROGRAMS="${progs[*]}" DESTDIR="${ED%/}" install
+		rm -f dropbear
+		dodir /usr/sbin
+		dosym ../bin/dropbearmulti /usr/sbin/dropbear
+		cd "${S}" || die
 	fi
 	save_config localoptions.h
 
 	if ! use minimal ; then
-		mv "${ED%/}"/usr/bin/{,db}scp || die
-		dodoc CHANGES README SMALL MULTI
+		mv "${ED}"/usr/bin/{,db}scp || die
 	fi
 
 	pamd_mimic system-remote-login dropbear auth account password session
