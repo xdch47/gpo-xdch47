@@ -1,4 +1,4 @@
-# Copyright 1999-2018 Gentoo Authors
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -9,8 +9,7 @@ DESCRIPTION="Simple GTK+2 painting program"
 HOMEPAGE="https://github.com/wjaguar/mtPaint"
 
 EGIT_REPO_URI="https://github.com/wjaguar/mtPaint.git"
-EGIT_COMMIT="a1c8b7a85ccca0ce8fe718908fbe140ff4385a8f"
-
+EGIT_COMMIT="a9e445ef0167631363fe954bd3ea7aec7853ca1a"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
