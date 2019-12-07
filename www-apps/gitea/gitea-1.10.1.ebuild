@@ -9,7 +9,7 @@ else
 	SCM="git-r3"
 fi
 
-inherit golang-base tmpfiles systemd ${SCM}
+inherit golang-build tmpfiles systemd ${SCM}
 unset SCM
 
 EGO_PN="code.gitea.io/gitea"
@@ -52,10 +52,9 @@ gitea_make() {
 	)
 	local my_makeopt=(
 		TAGS="${my_tags[@]}"
-		LDFLAGS="-extldflags \"${LDFLAGS}\""
 	)
 	[[ ${PV} != 9999* ]] && my_makeopt+=("DRONE_TAG=${PV}")
-	GOPATH=${WORKDIR}/${P}:$(get_golibdir_gopath) emake "${my_makeopt[@]}" "$@"
+	LDFLAGS="-extldflags \"${LDFLAGS}\"" emake "${my_makeopt[@]}" "$@"
 }
 
 src_prepare() {
