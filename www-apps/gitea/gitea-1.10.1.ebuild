@@ -9,7 +9,7 @@ else
 	SCM="git-r3"
 fi
 
-inherit golang-build tmpfiles systemd ${SCM}
+inherit golang-base tmpfiles systemd ${SCM}
 unset SCM
 
 EGO_PN="code.gitea.io/gitea"
@@ -52,9 +52,10 @@ gitea_make() {
 	)
 	local my_makeopt=(
 		TAGS="${my_tags[@]}"
+		LDFLAGS="-extldflags \"${LDFLAGS}\""
 	)
 	[[ ${PV} != 9999* ]] && my_makeopt+=("DRONE_TAG=${PV}")
-	LDFLAGS="-extldflags \"${LDFLAGS}\"" emake "${my_makeopt[@]}" "$@"
+	env GOPATH="${WORKDIR}/${P}:$(get_golibdir_gopath)" "${my_makeopt[@]}" emake "$@"
 }
 
 src_prepare() {
@@ -89,13 +90,13 @@ src_compile() {
 src_test() {
 	if has network-sandbox ${FEATURES}; then
 		einfo "Remove tests which are known to fail with network-sandbox enabled."
-		rm -rf ./modules/migrations/github_test.go
+		rm ./modules/migrations/github_test.go || die
 	fi
 
 	if [[ ${PV} != 9999* ]] ; then
 		einfo "Remove tests which depend on gitea git-repo."
-		rm -rf ./modules/git/blob_test.go
-		rm -rf ./modules/git/repo_test.go
+		rm ./modules/git/blob_test.go || die
+		rm ./modules/git/repo_test.go || die
 	fi
 
 	default
