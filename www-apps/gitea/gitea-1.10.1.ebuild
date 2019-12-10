@@ -57,10 +57,12 @@ gitea_make() {
 	)
 	local makeenv=(
 		TAGS="${gitea_tags[@]}"
-		LDFLAGS="-extldflags \"${LDFLAGS}\" ${gitea_vars[@]}"
+		LDFLAGS="-extldflags \"${LDFLAGS}\" ${gitea_settings[@]}"
+		GOPATH="${WORKDIR}/${P}:$(get_golibdir_gopath)"
 	)
 	[[ ${PV} != 9999* ]] && makeenv+=("DRONE_TAG=${PV}")
-	env GOPATH="${WORKDIR}/${P}:$(get_golibdir_gopath)" "${makeenv[@]}" emake "$@"
+
+	env "${makeenv[@]}" emake "$@"
 }
 
 src_prepare() {
