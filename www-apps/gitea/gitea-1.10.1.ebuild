@@ -45,17 +45,22 @@ S="${WORKDIR}/${P}/src/${EGO_PN}"
 PATCHES=( "${FILESDIR}/gitea-logflags.patch" )
 
 gitea_make() {
-	local my_tags=(
+	local gitea_tags=(
 		bindata
 		$(usev pam)
 		$(usex sqlite 'sqlite sqlite_unlock_notify' '')
 	)
-	local my_makeopt=(
-		TAGS="${my_tags[@]}"
-		LDFLAGS="-extldflags \"${LDFLAGS}\""
+	local gitea_settings=(
+		"-X code.gitea.io/gitea/modules/setting.CustomPath=${EPREFIX}/etc/app.ini"
+		"-X code.gitea.io/gitea/modules/setting.CustomConf=${EPREFIX}/var/lib/gitea/custom"
+		"-X code.gitea.io/gitea/modules/setting.AppWorkPath=${EPREFIX}/var/lib/gitea"
 	)
-	[[ ${PV} != 9999* ]] && my_makeopt+=("DRONE_TAG=${PV}")
-	env GOPATH="${WORKDIR}/${P}:$(get_golibdir_gopath)" "${my_makeopt[@]}" emake "$@"
+	local makeenv=(
+		TAGS="${gitea_tags[@]}"
+		LDFLAGS="-extldflags \"${LDFLAGS}\" ${gitea_vars[@]}"
+	)
+	[[ ${PV} != 9999* ]] && makeenv+=("DRONE_TAG=${PV}")
+	env GOPATH="${WORKDIR}/${P}:$(get_golibdir_gopath)" "${makeenv[@]}" emake "$@"
 }
 
 src_prepare() {
