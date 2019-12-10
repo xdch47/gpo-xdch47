@@ -51,8 +51,8 @@ gitea_make() {
 		$(usex sqlite 'sqlite sqlite_unlock_notify' '')
 	)
 	local gitea_settings=(
-		"-X code.gitea.io/gitea/modules/setting.CustomPath=${EPREFIX}/etc/app.ini"
-		"-X code.gitea.io/gitea/modules/setting.CustomConf=${EPREFIX}/var/lib/gitea/custom"
+		"-X code.gitea.io/gitea/modules/setting.CustomConf=${EPREFIX}/etc/gitea/app.ini"
+		"-X code.gitea.io/gitea/modules/setting.CustomPath=${EPREFIX}/var/lib/gitea/custom"
 		"-X code.gitea.io/gitea/modules/setting.AppWorkPath=${EPREFIX}/var/lib/gitea"
 	)
 	local makeenv=(
