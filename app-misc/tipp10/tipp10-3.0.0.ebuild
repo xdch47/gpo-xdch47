@@ -14,10 +14,9 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND="dev-qt/qtmultimedia"
-RDEPEND="${DEPEND}
+DEPEND="dev-qt/qtmultimedia
+	dev-qt/qtprintsupport
 	dev-qt/qtsql"
-BDEPEND=""
 
 S="${WORKDIR}/${PN}-v${PV}"
 
