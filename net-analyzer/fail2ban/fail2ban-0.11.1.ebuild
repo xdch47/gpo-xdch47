@@ -1,15 +1,15 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-PYTHON_COMPAT=( python{2_7,3_5,3_6} pypy )
+PYTHON_COMPAT=( python{2_7,3_6} )
 DISTUTILS_SINGLE_IMPL=1
 
-inherit bash-completion-r1 distutils-r1 git-r3 systemd
+inherit bash-completion-r1 distutils-r1 systemd
 
 DESCRIPTION="scans log files and bans IPs that show malicious signs"
 HOMEPAGE="https://www.fail2ban.org/"
-EGIT_REPO_URI="https://github.com/xdch47/${PN}"
+SRC_URI="https://github.com/${PN}/${PN}/tarball/${PV} -> ${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -25,9 +25,14 @@ RDEPEND="
 		sys-apps/systemd[python(-),${PYTHON_USEDEP}]
 	)' 'python*' ) )
 "
-REQUIRED_USE="systemd? ( !python_single_target_pypy )"
+
 RESTRICT="test"
 DOCS=( ChangeLog DEVELOP README.md THANKS TODO doc/run-rootless.txt )
+
+src_unpack() {
+	default
+	mv ${PN}-${PN}-* ${P} || die
+}
 
 python_prepare_all() {
 	default
@@ -61,8 +66,8 @@ python_install_all() {
 	systemd_dotmpfilesd files/${PN}-tmpfiles.conf
 	doman man/*.{1,5}
 
-	newbashcomp files/bash-completion ${PN}-client
-	bashcomp_alias ${PN}-{client,regex,server}
+	newbashcomp files/bash-completion fail2ban-client
+	bashcomp_alias fail2ban-client fail2ban-server fail2ban-regex
 
 	# Use INSTALL_MASK if you do not want to touch /etc/logrotate.d.
 	# See http://thread.gmane.org/gmane.linux.gentoo.devel/35675
