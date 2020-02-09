@@ -1,29 +1,25 @@
-# Copyright 1999-2018 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 inherit latex-package
 
 DESCRIPTION="Create glossaries and lists of acronyms"
-HOMEPAGE="http://www.ctan.org/pkg/glossaries/"
-SRC_URI="http://mercury.ddns.info/distfiles/${P}.tds.zip"
+HOMEPAGE="https://www.ctan.org/pkg/glossaries/"
+SRC_URI="https://gentoo.srv4.org/distfiles/${P}.tds.zip"
 
 LICENSE="LPPL-1.3"
 SLOT="0"
-KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86 ~amd64-fbsd ~x86-fbsd ~amd64-linux ~x86-linux ~ppc-macos ~x64-macos ~x86-macos"
+KEYWORDS="~amd64 ~arm ~x86"
 IUSE="doc examples"
 
-RDEPEND="
-	dev-lang/perl
+RDEPEND="dev-lang/perl
 	dev-texlive/texlive-latexrecommended
 	>=dev-texlive/texlive-latexextra-2012
-	dev-texlive/texlive-plaingeneric
-	"
-DEPEND="
-	${RDEPEND}
-	app-arch/unzip
-	"
+	dev-texlive/texlive-plaingeneric"
+DEPEND="${RDEPEND}
+	app-arch/unzip"
 
 TEXMF="/usr/share/texmf-site"
 
