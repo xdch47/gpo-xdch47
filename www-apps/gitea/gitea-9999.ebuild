@@ -26,10 +26,6 @@ else
 	EGIT_REPO_URI="https://github.com/go-gitea/gitea"
 	EGIT_CHECKOUT_DIR="${WORKDIR}/${P}/src/${EGO_PN}"
 	has test ${FEATURES} && EGIT_MIN_CLONE_TYPE="mirror"
-
-	if has network-sandbox ${FEATURES} ; then
-		die "Live ebuild does not work with network-sandbox feature enabled."
-	fi
 fi
 
 LICENSE="Apache-2.0 BSD BSD-2 ISC MIT MPL-2.0"
@@ -57,9 +53,12 @@ src_unpack() {
 	${SCM}_src_unpack
 
 	if has network-sandbox ${FEATURES} ; then
+		[[ ${PV} != 9999* ]] && die "Live ebuild does not work with network-sandbox feature enabled."
 		tar -C "${S}/public" -x --strip-components 1 \
 			-f "${DISTDIR}/${PN}-frontend-${PV}.tar.gz" || die
 	fi
+
+
 }
 
 gitea_make() {
