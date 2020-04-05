@@ -36,7 +36,8 @@ pkg_setup() {
 
 src_prepare() {
 	# Do not install /var/lock, bug #449968 .
-	sed -i -e '/install -d $(DESTDIR)/var/lock/logcheck$/d' Makefile || die
+	sed -i -e '#install -d $(DESTDIR)/var/lock/logcheck$#d' Makefile || die
+	default
 }
 
 src_install() {
