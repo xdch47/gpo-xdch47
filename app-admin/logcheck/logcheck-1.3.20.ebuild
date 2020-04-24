@@ -2,7 +2,8 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-inherit readme.gentoo-r1 user
+
+inherit readme.gentoo-r1 tmpfiles user
 
 DESCRIPTION="Mails anomalies in the system logfiles to the administrator"
 HOMEPAGE="https://packages.debian.org/sid/logcheck"
@@ -36,7 +37,7 @@ pkg_setup() {
 
 src_prepare() {
 	# Do not install /var/lock, bug #449968 .
-	sed -i -e '#install -d $(DESTDIR)/var/lock/logcheck$#d' Makefile || die
+	sed -i -e '\#install -d $(DESTDIR)/var/lock/logcheck$#d' Makefile || die
 	default
 }
 
@@ -48,6 +49,10 @@ src_install() {
 	readme.gentoo_create_doc
 	dodoc AUTHORS CHANGES CREDITS TODO docs/README.*
 	doman docs/logtail.8 docs/logtail2.8
+
+	newtmpfiles - logcheck.conf <<-EOF
+		d /run/lock/logcheck 0755 logcheck logcheck
+	EOF
 
 	exeinto /etc/cron.hourly
 	doexe "${FILESDIR}/${PN}.cron"
