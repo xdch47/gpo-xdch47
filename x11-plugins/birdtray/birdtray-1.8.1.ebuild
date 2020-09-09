@@ -3,26 +3,19 @@
 
 EAPI=7
 
-inherit cmake-utils xdg-utils
+inherit cmake xdg-utils
 
 DESCRIPTION="Birdtray is a free system tray notification for new mail for Thunderbird"
 HOMEPAGE="https://github.com/gyunaev/birdtray"
-SRC_URI="https://github.com/gyunaev/${PN}/archive/RELEASE_${PV}.tar.gz"
+SRC_URI="https://github.com/gyunaev/${PN}/archive/${PV}.tar.gz"
 LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64"
 
-RDEPEND="
-	dev-db/sqlite
+DEPEND="dev-db/sqlite
 	dev-qt/qtcore:5=
-	dev-qt/qtx11extras:5=
-	"
-
-S="${WORKDIR}/${PN}-RELEASE_${PV}"
-
-src_install() {
-	dobin  "${BUILD_DIR}/${PN}"
-}
+	dev-qt/qtx11extras:5="
+RDEPEND="${DEPEND}"
 
 pkg_postinst() {
 	xdg_icon_cache_update
