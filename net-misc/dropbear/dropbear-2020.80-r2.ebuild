@@ -1,26 +1,34 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
 
-inherit pam savedconfig user
+inherit savedconfig pam
 
 DESCRIPTION="small SSH 2 client/server designed for small memory environments"
 HOMEPAGE="https://matt.ucc.asn.au/dropbear/dropbear.html"
 SRC_URI="https://matt.ucc.asn.au/dropbear/releases/${P}.tar.bz2
 	https://matt.ucc.asn.au/dropbear/testing/${P}.tar.bz2"
 
-LICENSE="MIT"
+LICENSE="MIT GPL-2" # (init script is GPL-2 #426056)
 SLOT="0"
-KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~sh ~sparc ~x86 ~amd64-linux ~x86-linux"
-IUSE="bsdpty minimal multicall pam +shadow static +syslog +utmp zlib"
+KEYWORDS="~alpha ~amd64 ~arm ~arm64 ~hppa ~ia64 ~m68k ~mips ~ppc ~ppc64 ~s390 ~sparc ~x86 ~amd64-linux ~x86-linux"
+IUSE="bsdpty minimal multicall pam +shadow static +syslog utmp zlib"
 
-LIB_DEPEND="zlib? ( sys-libs/zlib[static-libs(+)] )
-	dev-libs/libtommath[static-libs(+)]"
-RDEPEND="!static? ( ${LIB_DEPEND//\[static-libs(+)]} )
-	pam? ( sys-libs/pam )"
-DEPEND="${RDEPEND}
-	static? ( ${LIB_DEPEND} )"
+LIB_DEPEND="
+	zlib? ( sys-libs/zlib[static-libs(+)] )
+	>=dev-libs/libtommath-1.2.0[static-libs(+)]
+"
+RDEPEND="
+	acct-group/sshd
+	acct-user/sshd
+	!static? ( ${LIB_DEPEND//\[static-libs(+)]} )
+	pam? ( sys-libs/pam )
+"
+DEPEND="
+	${RDEPEND}
+	static? ( ${LIB_DEPEND} )
+"
 RDEPEND+=" pam? ( >=sys-auth/pambase-20080219.1 )"
 
 REQUIRED_USE="pam? ( !static )"
@@ -44,9 +52,9 @@ src_prepare() {
 	sed \
 		-e '/SFTPSERVER_PATH/s:".*":"/usr/lib/misc/sftp-server":' \
 		default_options.h > localoptions.h || die
-	sed -i \
+	sed \
 		-e '/pam_start/s:sshd:dropbear:' \
-		svr-authpam.c || die
+		-i svr-authpam.c || die
 	restore_config localoptions.h
 }
 
@@ -65,9 +73,10 @@ src_configure() {
 		$(use_enable syslog)
 	)
 
-	if ! use utmp ; then
-		confopts+=(--disable-{lastlog,utmp{,x},wtmp{,x},loginfunc,putut{,x}line})
-	fi
+	for c in lastlog loginfunc putut{,x}line utmp{,x} wtmp{,x} ; do
+		myeconfargs+=($(use_enable utmp $c))
+	done
+
 	econf "${myeconfargs[@]}"
 }
 
@@ -103,9 +112,4 @@ src_install() {
 	fi
 
 	pamd_mimic system-remote-login dropbear auth account password session
-}
-
-pkg_preinst() {
-	enewgroup sshd 22
-	enewuser sshd 22 -1 /var/empty sshd
 }
