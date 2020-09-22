@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <maintainer type="project">
+    <email>fonts@gentoo.org</email>
+    <name>Fonts</name>
+  </maintainer>
+  <upstream>
+    <remote-id type="sourceforge">osnapfont</remote-id>
+  </upstream>
+  <use>
+    <flag name="otf">
+      Install Open Type Font (OTF) (required for HarfBuzz backend)
+    </flag>
+    <flag name="pcf">
+      Install Portable Compiled Font (PCF) (required for X11)
+    </flag>
+  </use>
+</pkgmetadata>
