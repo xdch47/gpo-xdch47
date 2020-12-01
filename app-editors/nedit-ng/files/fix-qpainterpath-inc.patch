@@ -1,0 +1,12 @@
+diff --git a/src/TextArea.cpp b/src/TextArea.cpp
+index ad22bff..2f3bac1 100644
+--- a/src/TextArea.cpp
++++ b/src/TextArea.cpp
+@@ -27,6 +27,7 @@
+ #include <QMimeData>
+ #include <QPaintEvent>
+ #include <QPainter>
++#include <QPainterPath>
+ #include <QPoint>
+ #include <QResizeEvent>
+ #include <QScrollBar>
