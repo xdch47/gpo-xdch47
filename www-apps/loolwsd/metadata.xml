@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<longdescription>
+		LibreOffice Online is a server service built from the main LibreOffice project code which provides display and collaborative visual editing of a range of document types. It does not include any form of file system. To be fully functional, it has to be integrated with file access and authentication provision from an underlying stack of software.
+
+		For anything more than casual use it also needs to be deployed with due consideration for load balancing and other scaling issues. As such, LibreOffice Online can be considered an enabling technology for the public cloud of ISPs or the private cloud of enterprises and large organizations, when integrated - for example - with an enterprise file sharing or a groupware solution
+	</longdescription>
+</pkgmetadata>

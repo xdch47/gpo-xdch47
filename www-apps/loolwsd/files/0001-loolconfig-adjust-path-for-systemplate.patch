@@ -1,0 +1,25 @@
+From f2005c068a38adf527a4e0f6c389549eae3f1c40 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Neum=C3=A4rker?= <xdch47@posteo.de>
+Date: Tue, 22 Dec 2020 09:28:41 +0100
+Subject: [PATCH] loolconfig: adjust path for systemplate
+
+---
+ tools/Config.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tools/Config.cpp b/tools/Config.cpp
+index cdcc351..20daee8 100644
+--- a/tools/Config.cpp
++++ b/tools/Config.cpp
+@@ -364,7 +364,7 @@ int Config::main(const std::vector<std::string>& args)
+     }
+     else if (args[0] == "update-system-template")
+     {
+-        const char command[] = "loolwsd-systemplate-setup /opt/lool/systemplate " LO_PATH " >/dev/null 2>&1";
++        const char command[] = "loolwsd-systemplate-setup /var/lib/loolwsd/systemplate " LO_PATH " >/dev/null 2>&1";
+         std::cout << "Running the following command:" << std::endl
+                   << command << std::endl;
+ 
+-- 
+2.26.2
+
