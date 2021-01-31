@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>xdch47@posteo.de</email>
+		<name>Felix Neumärker</name>
+	</maintainer>
+	<upstream>
+		<remote-id type="github">YosysHQ/yosys</remote-id>
+	</upstream>
+	<use>
+		<flag name="clang">Use Clang compiler instead of GCC</flag>
+		<flag name="abc">Use berkeley-abc (as yosys-abc) for technology mapping</flag>
+	</use>
+</pkgmetadata>
