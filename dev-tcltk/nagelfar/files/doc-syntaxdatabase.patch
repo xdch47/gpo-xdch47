@@ -12,9 +12,9 @@ index f1b2b4d..cf68038 100644
 -* syntaxdb*.tcl where Nagelfar is located
 +* syntaxdb*.tcl in /usr/lib/nagelfar
  
- You can select database(s) with the command line switch “-s”.
+ You can select database(s) with the command line switch "-s".
  
-@@ -37,11 +37,11 @@ script will run.
+@@ -38,11 +37,11 @@ script will run.
  
  For example, if you want to create a database for Tcl8.2:
  
