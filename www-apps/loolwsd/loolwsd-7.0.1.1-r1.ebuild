@@ -1,4 +1,4 @@
-# Copyright 2020 Gentoo Authors
+# Copyright 2020-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
@@ -17,7 +17,7 @@ KEYWORDS="~amd64"
 DEPEND="acct-group/lool
 	acct-user/lool
 	>=app-office/libreoffice-$(ver_cut 1)
-	dev-libs/poco
+	>=dev-libs/poco-1.10
 	app-arch/cpio"
 RDEPEND="${DEPEND}"
 BDEPEND="dev-python/polib
