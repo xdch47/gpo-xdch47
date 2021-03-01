@@ -1,7 +1,7 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
 DIST_AUTHOR="WSNYDER"
 DIST_VERSION=${PV}
@@ -18,3 +18,8 @@ RDEPEND=""
 DEPEND="${RDEPEND}"
 
 SRC_TEST="do"
+
+src_compile() {
+	# Force linking against -lstdc++
+	emake OTHERLDFLAGS="-lstdc++"
+}
