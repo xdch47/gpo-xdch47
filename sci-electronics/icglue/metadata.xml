@@ -12,5 +12,6 @@
 	</upstream>
 	<use>
 		<flag name="nagelfar">Use <pkg>dev-tcltk/nagelfar</pkg>as syntax checker</flag>
+		<flag name="system-tcllib">Use bundled tcllib files</flag>
 	</use>
 </pkgmetadata>
