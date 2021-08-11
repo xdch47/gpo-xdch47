@@ -21,5 +21,5 @@ SRC_TEST="do"
 
 src_compile() {
 	# Force linking against -lstdc++
-	emake OTHERLDFLAGS="-lstdc++"
+	emake OTHERLDFLAGS="-Wl,-rpath "$EPREFIX/usr/$(get_libdir)" -lstdc++"
 }
