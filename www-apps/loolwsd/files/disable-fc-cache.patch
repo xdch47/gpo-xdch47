@@ -1,0 +1,13 @@
+diff --git a/test/Makefile.in b/test/Makefile.in
+index 43575f1..ceb8522 100644
+--- a/test/Makefile.in
++++ b/test/Makefile.in
+@@ -2205,7 +2205,7 @@ all-local: unittest
+ 	@echo
+ 	@echo "Running build-time unit tests.  For more thorough testing, please run 'make check'."
+ 	@echo
+-	@fc-cache "@LO_PATH@"/share/fonts/truetype
++	@#fc-cache "@LO_PATH@"/share/fonts/truetype
+ 	@UNITTEST=1 ${top_builddir}/test/unittest
+ 
+ # Tell versions [3.59,3.63) of GNU make to not export all variables.
