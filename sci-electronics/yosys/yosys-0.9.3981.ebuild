@@ -1,16 +1,17 @@
-# Copyright 2021 Gentoo Authors
+# Copyright 2021-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_{7,8,9} )
+PYTHON_COMPAT=( python3_{8..11} )
 
 inherit python-single-r1
 
-ABC_GIT_COMMIT="3709744"
+YOSYS_GIT_COMMIT="0e0f84299a4ae4d0a312c33039378e1ebb20709d"
+ABC_GIT_COMMIT="4f5f73d"
 DESCRIPTION="Framework for Verilog RTL synthesis"
 HOMEPAGE="http://www.clifford.at/yosys/"
-SRC_URI="https://github.com/YosysHQ/yosys/archive/yosys-0.9.tar.gz
+SRC_URI="https://github.com/YosysHQ/yosys/archive/$YOSYS_GIT_COMMIT.tar.gz -> ${P}.tar.gz
 	https://github.com/berkeley-abc/abc/archive/$ABC_GIT_COMMIT.tar.gz -> abc-$ABC_GIT_COMMIT.tar.gz"
 
 LICENSE="ISC"
@@ -41,7 +42,7 @@ RDEPEND="${DEPEND}
 	media-gfx/xdot
 "
 
-S="${WORKDIR}/yosys-${P}"
+S="${WORKDIR}/yosys-${YOSYS_GIT_COMMIT}"
 
 src_prepare() {
 	default
@@ -70,4 +71,9 @@ src_configure() {
 		ENABLE_EDITLINE := $(usex libedit 1 0)
 		ENABLE_PYOSYS := $(usex python 1 0)
 	__EOF__
+}
+
+src_install() {
+	default
+	python_optimize
 }
