@@ -1,7 +1,7 @@
-# Copyright 1999-2021 Gentoo Authors
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
 DESCRIPTION="Static syntax checker for Tcl"
 HOMEPAGE="https://sourceforge.net/projects/nagelfar/files/"
@@ -19,21 +19,16 @@ PATCHES=("${FILESDIR}/doc-syntaxdatabase.patch")
 
 S="${WORKDIR}/${PN}${PV}"
 
-src_compile() {
-	sed -i \
-		-e "s|^set dbdir |& ${EPREFIX}/usr/lib/nagelfar|g" \
-		-e "s|^set docdir|& ${EPREFIX}/usr/share/doc/nagelfar-${PV}|g" \
-		nagelfar.tcl || die
-}
-
 src_install() {
-	# install script, removing trailing .tcl
-	newbin ${PN}.tcl ${PN}
 
 	# install syntax buildscript
-	insinto /usr/lib/${PN}
+	insinto "/usr/lib/${PN}"
 	doins syntaxbuild.tcl
 
+	exeinto "/usr/lib/${PN}"
+	doexe "${PN}.tcl"
+
+	dosym -r  "/usr/lib/${PN}/${PN}.tcl" "/usr/bin/${PN}"
 	# install syntax files and packagedb
 	doins syntaxdb.tcl
 	doins -r packagedb
