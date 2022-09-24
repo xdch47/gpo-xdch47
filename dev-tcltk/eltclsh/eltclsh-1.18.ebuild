@@ -21,5 +21,6 @@ RDEPEND="${DEPEND}"
 BDEPEND=""
 
 src_install() {
+	default
 	find "${ED}" -name '*.la' -delete || die
 }
