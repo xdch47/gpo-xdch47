@@ -1,0 +1,10 @@
+DEFINED_PHASES=compile install
+DESCRIPTION=Simple and efficient way to access various statistics in a git repository
+EAPI=7
+HOMEPAGE=https://github.com/arzzen/git-quick-stats
+KEYWORDS=~amd64 ~x86
+LICENSE=MIT
+RDEPEND=dev-vcs/git sys-apps/coreutils virtual/awk
+SLOT=0
+SRC_URI=https://github.com/arzzen/git-quick-stats/archive/2.0.10.tar.gz -> git-quick-stats-2.0.10.tar.gz
+_md5_=9055b4bdf957528d15df78c41d9710c2
