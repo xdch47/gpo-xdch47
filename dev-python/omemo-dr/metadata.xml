@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<longdescription>
+		This library handles only the crypto part of OMEMO, not the XMPP protocol part. This means you need to take care yourself of things like publishing/downloading bundles, publishing/subscribing to PEP deviceliste updates, sending and receiving messages.
+		Initial codebase was forked from https://github.com/tgalal/python-axolotl but has since been heavily rewritten.
+	</longdescription>
+</pkgmetadata>
