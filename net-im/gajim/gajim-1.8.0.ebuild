@@ -16,7 +16,7 @@ SRC_URI="https://gajim.org/downloads/$(ver_cut 1-2)/${P/_p/-}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
-KEYWORDS="-amd64 -arm64 -riscv -x86"
+KEYWORDS="~amd64 ~arm64 ~riscv ~x86"
 IUSE="+crypt geolocation jingle omemo remote rst +spell upnp +webp"
 
 COMMON_DEPEND="
@@ -84,7 +84,7 @@ python_install() {
 	distutils-r1_python_install
 	./pep517build/install_metadata.py dist/metadata --prefix="${D}/usr"
 
-	rm "${D}"/usr/share/man/man1/*.gz
+	rm "${D}"/usr/share/man/man1/*.gz || die
 	doman data/*.1
 }
 
