@@ -5,7 +5,7 @@
 		Python abstraction layer for registerfile access
 	</longdescription>
 	<upstream>
-		<remote-id type="pypi">regfile_generics</remote-id>
+		<remote-id type="pypi">regfile-generics</remote-id>
 		<remote-id type="github">icglue/regfile_generics</remote-id>
 	</upstream>
 </pkgmetadata>
