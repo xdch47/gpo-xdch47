@@ -22,7 +22,7 @@ fi
 LICENSE="GPL-2"
 SLOT="0"
 IUSE="aac alsa +cache curl debug ffmpeg flac jack +libsamplerate mad +magic modplug musepack
-	oss sid sndfile sndio speex timidity tremor +unicode vorbis wavpack"
+	oss pulseaudio sid sndfile sndio speex timidity tremor +unicode vorbis wavpack"
 
 S="${WORKDIR}"/${MY_P}
 
@@ -49,6 +49,7 @@ RDEPEND="
 		media-sound/musepack-tools
 		>=media-libs/taglib-1.5
 	)
+	pulseaudio? ( media-libs/libpulse )
 	sid? ( >=media-libs/libsidplay-2.1.1 )
 	sndfile? ( >=media-libs/libsndfile-1.0.0 )
 	sndio? ( media-sound/sndio )
@@ -81,6 +82,7 @@ src_configure() {
 		$(use_enable debug)
 		$(use_enable cache)
 		$(use_with oss)
+		$(use_with pulseaudio pulse)
 		$(use_with alsa)
 		$(use_with jack)
 		$(use_with sndio)
