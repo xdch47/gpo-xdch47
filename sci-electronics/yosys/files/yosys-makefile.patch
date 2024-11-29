@@ -1,0 +1,31 @@
+--- a/Makefile	2024-08-14 14:36:42.000000000 -0700
++++ a/Makefile	2024-08-14 14:38:01.079046045 -0700
+@@ -785,27 +785,7 @@
+ .PHONY: check-git-abc
+ 
+ check-git-abc:
+-	@if [ ! -d "$(YOSYS_SRC)/abc" ]; then \
+-		echo "Error: The 'abc' directory does not exist."; \
+-		echo "Initialize the submodule: Run 'git submodule update --init' to set up 'abc' as a submodule."; \
+-		exit 1; \
+-	elif git -C "$(YOSYS_SRC)" submodule status abc 2>/dev/null | grep -q '^ '; then \
+-		exit 0; \
+-	elif [ -f "$(YOSYS_SRC)/abc/.gitcommit" ] && ! grep -q '\$$Format:%[hH]\$$' "$(YOSYS_SRC)/abc/.gitcommit"; then \
+-		echo "'abc' comes from a tarball. Continuing."; \
+-		exit 0; \
+-	elif [ -f "$(YOSYS_SRC)/abc/.gitcommit" ] && grep -q '\$$Format:%[hH]\$$' "$(YOSYS_SRC)/abc/.gitcommit"; then \
+-		echo "Error: 'abc' is not configured as a git submodule."; \
+-		echo "To resolve this:"; \
+-		echo "1. Back up your changes: Save any modifications from the 'abc' directory to another location."; \
+-		echo "2. Remove the existing 'abc' directory: Delete the 'abc' directory and all its contents."; \
+-		echo "3. Initialize the submodule: Run 'git submodule update --init' to set up 'abc' as a submodule."; \
+-		echo "4. Reapply your changes: Move your saved changes back to the 'abc' directory, if necessary."; \
+-		exit 1; \
+-	else \
+-		echo "Initialize the submodule: Run 'git submodule update --init' to set up 'abc' as a submodule."; \
+-		exit 1; \
+-	fi
++	exit 0;
+ 
+ abc/abc$(EXE) abc/libabc.a: check-git-abc
+ 	$(P)
