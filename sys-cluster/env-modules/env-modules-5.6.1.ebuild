@@ -4,19 +4,19 @@
 EAPI=7
 
 DESCRIPTION="Provides for an easy dynamic modification of a user's environment."
-HOMEPAGE="https://sourceforge.net/projects/modules/"
+HOMEPAGE="https://envmodules.io"
 
-SRC_URI="https://github.com/cea-hpc/modules/releases/download/v${PV}/modules-${PV}.tar.gz"
+SRC_URI="https://github.com/envmodules/modules/releases/download/v${PV}/modules-${PV}.tar.gz"
+S=${WORKDIR}/modules-${PV}
 
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE="doc compat-version example-modulefiles init-profile vim-syntax"
 
 DEPEND=">=dev-lang/tcl-7.0.0:0"
 RDEPEND="$DEPEND"
 
-S=${WORKDIR}/modules-${PV}
+IUSE="doc compat-version example-modulefiles init-profile vim-syntax"
 
 src_configure() {
 	# handcrafted configure -- prefix is MODULESHOME
@@ -27,6 +27,7 @@ src_configure() {
 		--libexecdir="${EPREFIX}/usr/libexec" \
 		--etcdir="${EPREFIX}/etc" \
 		--initdir="${EPREFIX}/etc/modules/init" \
+		--with-initconf-in=initdir \
 		--with-moduleshome="${EPREFIX}/etc/modules" \
 		--datarootdir="${EPREFIX}/usr/share" \
 		--mandir="${EPREFIX}/usr/share/man" \
@@ -59,16 +60,6 @@ src_install() {
 }
 
 pkg_postinst() {
-	local v
-	for v in ${REPLACING_VERSIONS}; do
-		if ver_test "${v}" -lt 4.3; then
-			elog "Some verbose upgrade message for <1.3 users"
-			ewarn ""
-			ewarn "Enviroment variable \${MODULESHOME} (obsolete) moved from /usr to /etc/modules"
-			ewarn ""
-		fi
-	done
-
 	elog ""
 	elog "ZSH: For the use of module-cmd in a none-login Z-shell enviroment"
 	elog "the following entry should be added to the zshrc"
