@@ -14,7 +14,7 @@ SRC_URI="https://gitlab.com/surfer-project/${MY_PN}/-/jobs/${job}/artifacts/raw/
 S="${WORKDIR}"
 LICENSE="EUPL-1.2"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="~amd64"
 
 DEPEND="dev-libs/openssl"
 RDEPEND="${DEPEND}"
