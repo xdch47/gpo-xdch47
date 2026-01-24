@@ -4,4 +4,7 @@
 	<longdescription lang="en">
 		nedit-ng is a Qt port of the Nirvana Editor (NEdit) version 5.6. It is intended to be a drop in replacement for nedit in every practical way.
 	</longdescription>
+	<upstream>
+		<remote-id type="github">eteran/nedit-ng</remote-id>
+	</upstream>
 </pkgmetadata>

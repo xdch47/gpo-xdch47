@@ -1,0 +1,31 @@
+diff --git a/libs/yaml-cpp-0.8.0/src/emitterutils.cpp b/libs/yaml-cpp-0.8.0/src/emitterutils.cpp
+index 6cdf6de..2ceea2b 100644
+--- a/libs/yaml-cpp-0.8.0/src/emitterutils.cpp
++++ b/libs/yaml-cpp-0.8.0/src/emitterutils.cpp
+@@ -1,6 +1,7 @@
+ #include <algorithm>
+ #include <iomanip>
+ #include <sstream>
++#include <cstdint>
+ 
+ #include "emitterutils.h"
+ #include "exp.h"
+diff --git a/src/gap_buffer_iterator.h b/src/gap_buffer_iterator.h
+index e048047..ef80a4f 100644
+--- a/src/gap_buffer_iterator.h
++++ b/src/gap_buffer_iterator.h
+@@ -91,6 +91,13 @@ public:
+        reference operator[](difference_type offset) const { return buf_[pos_ + offset]; }
+        pointer operator->() const { return &buf_[pos_]; }
+ 
++public:
++       void swap(gap_buffer_iterator &other) {
++               using std::swap;
++               swap(pos_, other.pos_);
++               swap(buf_, other.buf_);
++       }
++
+ public:
+        // templated to allow comparison between const/non-const iterators
+        template <class CharT, class Traits, bool Const>
+
