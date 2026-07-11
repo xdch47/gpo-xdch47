@@ -9,9 +9,8 @@ The modulefiles are added to and removed from the current environment by the use
 
 The action for the module command to take is described by the sub-command and its associated arguments.</longdescription>
   <use>
-    <flag name="compat-version">Also install C version of modules (compatibility mode)</flag>
     <flag name="example-modulefiles">Install example module files</flag>
-    <flag name="init-profile">Create a symlinks in /etc/profile.d directory to init/profile.{sh,csh}</flag>
+    <flag name="nagelfar">Build and provide nagelfar syntax database</flag>
   </use>
   <upstream>
     <remote-id type="github">envmodules/modules</remote-id>
