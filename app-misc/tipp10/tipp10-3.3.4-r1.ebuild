@@ -14,13 +14,13 @@ LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
-DEPEND="dev-qt/qtmultimedia
-	dev-qt/qtprintsupport
-	dev-qt/qtsql"
+BDEPEND="dev-qt/qttools"
+DEPEND="dev-qt/qtmultimedia"
 
 pkg_postinst() {
 	xdg_icon_cache_update
 }
+
 pkg_postrm() {
 	xdg_icon_cache_update
 }
